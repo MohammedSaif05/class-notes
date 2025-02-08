@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOC - Educational Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .option-btn {
+            transition: transform 0.2s;
+        }
+        
+        .option-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .unit-btn, .test-btn {
+            transition: all 0.2s;
+        }
+
+        .unit-btn:hover, .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .watermark {
+            position: fixed;
+            bottom: 1rem;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .watermark a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .watermark a:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body class="bg-[#121212] text-white min-h-screen p-4">
+    <div class="max-w-3xl mx-auto">
+        <!-- Back Button -->
+        <a href="../index.html" class="inline-block mb-6 text-gray-400 hover:text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline-block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Subjects
+        </a>
+
+        <h1 class="text-2xl font-bold text-center mb-8">Theory of Computation</h1>
+
+        <!-- Main Options -->
+        <div class="grid grid-cols-2 gap-4 mb-8">
+            <button onclick="showSection('notes')" class="option-btn bg-pink-600 p-6 rounded-lg text-center text-lg font-semibold hover:bg-pink-700">
+                NOTES
+            </button>
+            <button onclick="showSection('papers')" class="option-btn bg-pink-600 p-6 rounded-lg text-center text-lg font-semibold hover:bg-pink-700">
+                QUESTION PAPERS
+            </button>
+        </div>
+
+        <!-- Notes Section -->
+        <div id="notes-section" class="content-section">
+            <h2 class="text-xl font-semibold mb-4">Notes</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="../pdfs/toc/notes/unit1.pdf" download class="unit-btn bg-pink-800 p-4 rounded-lg text-center hover:bg-pink-700">Unit 1</a>
+                <button onclick="showNotesComingSoon()" class="unit-btn bg-pink-800 p-4 rounded-lg text-center hover:bg-pink-700">Unit 2</button>
+                <button onclick="showNotesComingSoon()" class="unit-btn bg-pink-800 p-4 rounded-lg text-center hover:bg-pink-700">Unit 3</button>
+                <button onclick="showNotesComingSoon()" class="unit-btn bg-pink-800 p-4 rounded-lg text-center hover:bg-pink-700">Unit 4</button>
+                <button onclick="showNotesComingSoon()" class="unit-btn bg-pink-800 p-4 rounded-lg text-center hover:bg-pink-700">Unit 5</button>
+            </div>
+        </div>
+
+        <!-- Question Papers Section -->
+        <div id="papers-section" class="content-section">
+            <h2 class="text-xl font-semibold mb-4">Question Papers</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a href="../pdfs/toc/papers/ut1.pdf" download class="test-btn bg-pink-800 p-4 rounded-lg text-center hover:bg-pink-700">UT-1</a>
+                <button onclick="showComingSoon()" class="test-btn bg-pink-800 p-4 rounded-lg text-center hover:bg-pink-700">UT-2</button>
+                <button onclick="showComingSoon()" class="test-btn bg-pink-800 p-4 rounded-lg text-center hover:bg-pink-700">UT-3</button>
+                <button onclick="showComingSoon()" class="test-btn bg-pink-800 p-4 rounded-lg text-center hover:bg-pink-700">MODEL-1</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="watermark">
+        Designed and developed by <a href="https://your-portfolio-url.com" target="_blank">Mohammed Saif</a>
+    </div>
+
+    <script>
+        function showSection(section) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Show selected section
+            const selectedSection = document.getElementById(`${section}-section`);
+            selectedSection.style.display = 'block';
+        }
+
+        function showComingSoon() {
+            Swal.fire({
+                title: 'Coming Soon!',
+                text: 'This content will be available shortly. Stay tuned!',
+                icon: 'info',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#DB2777', // Pink theme
+                background: '#1E1E1E',
+                color: '#fff'
+            });
+        }
+
+        function showNotesComingSoon() {
+            Swal.fire({
+                title: 'Notes Coming Soon!',
+                text: 'Notes for this unit will be uploaded shortly. Stay tuned!',
+                icon: 'info',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#DB2777', // Pink theme
+                background: '#1E1E1E',
+                color: '#fff'
+            });
+        }
+    </script>
+</body>
+</html> 
