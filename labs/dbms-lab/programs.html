@@ -82,17 +82,7 @@
 
         <!-- Programs Grid -->
         <div class="grid gap-4">
-            <!-- Program Card Template -->
-            <div class="program-card bg-teal-900 rounded-lg p-4">
-                <h2 class="text-xl font-semibold mb-2">Program 1: Basic SQL Queries</h2>
-                <p class="text-gray-300 mb-4">Implementation of basic SQL queries (SELECT, INSERT, UPDATE, DELETE)</p>
-                <div class="flex space-x-4">
-                    <a href="#" class="bg-teal-700 hover:bg-teal-600 px-4 py-2 rounded">View Code</a>
-                    <a href="#" class="bg-teal-700 hover:bg-teal-600 px-4 py-2 rounded">Download</a>
-                </div>
-            </div>
-
-            <!-- Add more program cards as needed -->
+            <!-- Program cards will be dynamically added here -->
         </div>
     </div>
 
@@ -157,8 +147,66 @@ AND Salary >= 60000;`
             // Add more DBMS programs here
         ];
 
-        // Same JavaScript functions as OS Lab
-        // ... (copy all the JavaScript functions from OS Lab)
+        // Generate program cards
+        const programsGrid = document.querySelector('.grid');
+        programs.forEach(program => {
+            const card = `
+                <div class="program-card bg-teal-900 rounded-lg p-4">
+                    <h2 class="text-xl font-semibold mb-2">Program ${program.id}: ${program.title}</h2>
+                    <div class="flex space-x-4">
+                        <button onclick="showCode(${program.id})" class="bg-teal-700 hover:bg-teal-600 px-4 py-2 rounded">View Code</button>
+                        <button onclick="copyCode(${program.id})" class="bg-teal-700 hover:bg-teal-600 px-4 py-2 rounded">Copy</button>
+                    </div>
+                </div>
+            `;
+            programsGrid.innerHTML += card;
+        });
+
+        // Modal functions
+        function showCode(programId) {
+            const program = programs.find(p => p.id === programId);
+            document.getElementById('modalTitle').textContent = `Program ${program.id}: ${program.title}`;
+            document.getElementById('codeDisplay').textContent = program.code;
+            document.getElementById('codeModal').style.display = 'block';
+            Prism.highlightAll();
+        }
+
+        function closeModal() {
+            document.getElementById('codeModal').style.display = 'none';
+        }
+
+        // Updated Notification function
+        function showNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Updated Copy function with error handling
+        function copyCode(programId) {
+            const program = programs.find(p => p.id === programId);
+            navigator.clipboard.writeText(program.code)
+                .then(() => {
+                    showNotification();
+                })
+                .catch(err => {
+                    console.error('Failed to copy text: ', err);
+                    const notification = document.getElementById('notification');
+                    notification.style.backgroundColor = '#dc2626';
+                    notification.innerHTML = '<div class="flex items-center"><svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>Failed to copy code!</div>';
+                    showNotification();
+                });
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('codeModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
     </script>
 </body>
 </html> 
