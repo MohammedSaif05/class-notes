@@ -62,13 +62,23 @@
         }
         
         .watermark a {
-            color: #888;
+            background: linear-gradient(90deg, #F59E0B, #EC4899);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 600;
             text-decoration: none;
-            transition: color 0.2s;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px rgba(236, 72, 153, 0.3);
         }
         
         .watermark a:hover {
-            color: #fff;
+            background: linear-gradient(90deg, #FCD34D, #F472B6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(236, 72, 153, 0.5);
+            transform: scale(1.05);
         }
 
         /* Add new styles for sections */
@@ -102,22 +112,22 @@
         <h2 class="section-title">Theory Subjects</h2>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
             <!-- Subject Buttons -->
-            <a href="subjects/oose.html" class="subject-btn bg-purple-600 p-4 rounded-lg text-center hover:bg-purple-700">
+            <a href="subjects/oose.html" class="subject-btn bg-purple-600 p-6 sm:p-8 rounded-lg text-center hover:bg-purple-700 text-lg sm:text-xl font-medium">
                 OOSE
             </a>
-            <a href="subjects/daa.html" class="subject-btn bg-blue-600 p-4 rounded-lg text-center hover:bg-blue-700">
+            <a href="subjects/daa.html" class="subject-btn bg-blue-600 p-6 sm:p-8 rounded-lg text-center hover:bg-blue-700 text-lg sm:text-xl font-medium">
                 DAA
             </a>
-            <a href="subjects/dbms.html" class="subject-btn bg-green-600 p-4 rounded-lg text-center hover:bg-green-700">
+            <a href="subjects/dbms.html" class="subject-btn bg-green-600 p-6 sm:p-8 rounded-lg text-center hover:bg-green-700 text-lg sm:text-xl font-medium">
                 DBMS
             </a>
-            <a href="subjects/os.html" class="subject-btn bg-red-600 p-4 rounded-lg text-center hover:bg-red-700">
+            <a href="subjects/os.html" class="subject-btn bg-red-600 p-6 sm:p-8 rounded-lg text-center hover:bg-red-700 text-lg sm:text-xl font-medium">
                 OS
             </a>
-            <a href="subjects/ne.html" class="subject-btn bg-yellow-600 p-4 rounded-lg text-center hover:bg-yellow-700">
+            <a href="subjects/ne.html" class="subject-btn bg-yellow-600 p-6 sm:p-8 rounded-lg text-center hover:bg-yellow-700 text-lg sm:text-xl font-medium">
                 NE
             </a>
-            <a href="subjects/toc.html" class="subject-btn bg-pink-600 p-4 rounded-lg text-center hover:bg-pink-700">
+            <a href="subjects/toc.html" class="subject-btn bg-pink-600 p-6 sm:p-8 rounded-lg text-center hover:bg-pink-700 text-lg sm:text-xl font-medium">
                 TOC
             </a>
         </div>
@@ -129,27 +139,27 @@
         <h2 class="section-title">Laboratory Subjects</h2>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
             <!-- Lab Subject Buttons -->
-            <div class="subject-btn bg-indigo-600 p-4 rounded-lg text-center hover:bg-indigo-700">
-                <div class="block mb-2">NE LAB</div>
-                <div class="flex justify-center space-x-2 text-sm">
-                    <a href="labs/ne-lab/NE_LAB_MANUAL.pdf" download class="bg-indigo-700 px-3 py-1 rounded hover:bg-indigo-800">Manual</a>
-                    <a href="labs/ne-lab/programs.html" class="bg-indigo-700 px-3 py-1 rounded hover:bg-indigo-800">Programs</a>
+            <div class="subject-btn bg-indigo-600 p-6 sm:p-8 rounded-lg text-center hover:bg-indigo-700">
+                <div class="block mb-3 text-lg sm:text-xl font-medium">NE LAB</div>
+                <div class="flex justify-center space-x-2 text-sm sm:text-base">
+                    <a href="labs/ne-lab/NE_LAB_MANUAL.pdf" download class="bg-indigo-700 px-4 py-2 rounded hover:bg-indigo-800">Manual</a>
+                    <a href="labs/ne-lab/programs.html" class="bg-indigo-700 px-4 py-2 rounded hover:bg-indigo-800">Programs</a>
                 </div>
             </div>
             
-            <div class="subject-btn bg-orange-600 p-4 rounded-lg text-center hover:bg-orange-700">
-                <div class="block mb-2">OS LAB</div>
-                <div class="flex justify-center space-x-2 text-sm">
-                    <a href="labs/os-lab/OS RECORD.pdf" download class="bg-orange-700 px-3 py-1 rounded hover:bg-orange-800">Manual</a>
-                    <a href="labs/os-lab/programs.html" class="bg-orange-700 px-3 py-1 rounded hover:bg-orange-800">Programs</a>
+            <div class="subject-btn bg-orange-600 p-6 sm:p-8 rounded-lg text-center hover:bg-orange-700">
+                <div class="block mb-3 text-lg sm:text-xl font-medium">OS LAB</div>
+                <div class="flex justify-center space-x-2 text-sm sm:text-base">
+                    <a href="labs/os-lab/OS RECORD.pdf" download class="bg-orange-700 px-4 py-2 rounded hover:bg-orange-800">Manual</a>
+                    <a href="labs/os-lab/programs.html" class="bg-orange-700 px-4 py-2 rounded hover:bg-orange-800">Programs</a>
                 </div>
             </div>
             
-            <div class="subject-btn bg-teal-600 p-4 rounded-lg text-center hover:bg-teal-700">
-                <div class="block mb-2">DBMS LAB</div>
-                <div class="flex justify-center space-x-2 text-sm">
-                    <a href="labs/dbms-lab/DBMS-lab.pdf" download class="bg-teal-700 px-3 py-1 rounded hover:bg-teal-800">Manual</a>
-                    <a href="labs/dbms-lab/programs.html" class="bg-teal-700 px-3 py-1 rounded hover:bg-teal-800">Programs</a>
+            <div class="subject-btn bg-teal-600 p-6 sm:p-8 rounded-lg text-center hover:bg-teal-700">
+                <div class="block mb-3 text-lg sm:text-xl font-medium">DBMS LAB</div>
+                <div class="flex justify-center space-x-2 text-sm sm:text-base">
+                    <a href="labs/dbms-lab/DBMS-lab.pdf" download class="bg-teal-700 px-4 py-2 rounded hover:bg-teal-800">Manual</a>
+                    <a href="labs/dbms-lab/programs.html" class="bg-teal-700 px-4 py-2 rounded hover:bg-teal-800">Programs</a>
                 </div>
             </div>
         </div>

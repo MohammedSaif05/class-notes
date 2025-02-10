@@ -16,6 +16,59 @@
         .program-card:hover {
             transform: scale(1.02);
         }
+
+        /* Add missing modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            position: relative;
+            background-color: #1e1e1e;
+            margin: 2% auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 8px;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: -100px;
+            right: 20px;
+            padding: 16px 24px;
+            background-color: #059669;
+            color: white;
+            border-radius: 8px;
+            transition: bottom 0.3s ease-in-out;
+            z-index: 2000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .notification.show {
+            bottom: 20px;
+        }
+
+        .code-editor {
+            background-color: #2d2d2d;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
     </style>
 </head>
 <body class="bg-[#121212] text-white min-h-screen p-4">
