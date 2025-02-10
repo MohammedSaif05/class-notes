@@ -68,6 +68,36 @@
             top: 10px;
             right: 10px;
         }
+
+        .btn-gradient-primary {
+            background: linear-gradient(135deg, #14B8A6, #0D9488);
+            transition: all 0.3s ease;
+            border: none;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(20, 184, 166, 0.2);
+        }
+
+        .btn-gradient-primary:hover {
+            background: linear-gradient(135deg, #0D9488, #14B8A6);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(20, 184, 166, 0.3);
+        }
+
+        .btn-gradient-secondary {
+            background: linear-gradient(135deg, #2DD4BF, #0F766E);
+            transition: all 0.3s ease;
+            border: none;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(15, 118, 110, 0.2);
+        }
+
+        .btn-gradient-secondary:hover {
+            background: linear-gradient(135deg, #0F766E, #2DD4BF);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(15, 118, 110, 0.3);
+        }
     </style>
 </head>
 <body class="bg-[#121212] text-white min-h-screen p-4">
@@ -154,8 +184,8 @@ AND Salary >= 60000;`
                 <div class="program-card bg-teal-900 rounded-lg p-4">
                     <h2 class="text-xl font-semibold mb-2">Program ${program.id}: ${program.title}</h2>
                     <div class="flex space-x-4">
-                        <button onclick="showCode(${program.id})" class="bg-teal-700 hover:bg-teal-600 px-4 py-2 rounded">View Code</button>
-                        <button onclick="copyCode(${program.id})" class="bg-teal-700 hover:bg-teal-600 px-4 py-2 rounded">Copy</button>
+                        <button onclick="showCode(${program.id})" class="btn-gradient-primary px-4 py-2 rounded">View Code</button>
+                        <button onclick="copyCode(${program.id})" class="btn-gradient-secondary px-4 py-2 rounded">Copy</button>
                     </div>
                 </div>
             `;
