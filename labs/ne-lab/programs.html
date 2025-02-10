@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NE Lab Programs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Add Prism.js for Java highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-java.min.js"></script>
+    <style>
+        .program-card {
+            transition: transform 0.2s;
+        }
+        .program-card:hover {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body class="bg-[#121212] text-white min-h-screen p-4">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header with back button -->
+        <div class="flex items-center mb-8">
+            <a href="../../index.html" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg mr-4">
+                ← Back
+            </a>
+            <h1 class="text-2xl font-bold">Network Engineering Lab Programs</h1>
+        </div>
+
+        <!-- Programs Grid -->
+        <div class="grid gap-4">
+            <!-- Program Card Template -->
+            <div class="program-card bg-indigo-900 rounded-lg p-4">
+                <h2 class="text-xl font-semibold mb-2">Program 1: Basic Network Commands</h2>
+                <p class="text-gray-300 mb-4">Implementation of basic networking commands (ping, ipconfig, netstat, tracert)</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="bg-indigo-700 hover:bg-indigo-600 px-4 py-2 rounded">View Code</a>
+                    <a href="#" class="bg-indigo-700 hover:bg-indigo-600 px-4 py-2 rounded">Download</a>
+                </div>
+            </div>
+
+            <!-- Add more program cards as needed -->
+        </div>
+    </div>
+
+    <!-- Same modal and notification structure -->
+    <div id="codeModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded" onclick="closeModal()">×</button>
+            <h2 id="modalTitle" class="text-xl font-bold mb-4"></h2>
+            <div class="code-editor">
+                <pre><code class="language-java" id="codeDisplay"></code></pre>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification">
+        <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Code copied successfully!
+        </div>
+    </div>
+
+    <script>
+        // NE Lab Programs
+        const programs = [
+            {
+                id: 1,
+                title: "TCP Client-Server Communication",
+                code: `// Server.java
+import java.io.*;
+import java.net.*;
+
+public class Server {
+    public static void main(String[] args) {
+        try {
+            ServerSocket ss = new ServerSocket(6666);
+            Socket s = ss.accept();
+            
+            DataInputStream dis = new DataInputStream(s.getInputStream());
+            String str = (String)dis.readUTF();
+            System.out.println("message= " + str);
+            
+            ss.close();
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+    }
+}
+
+// Client.java
+import java.io.*;
+import java.net.*;
+
+public class Client {
+    public static void main(String[] args) {
+        try {
+            Socket s = new Socket("localhost", 6666);
+            DataOutputStream dout = new DataOutputStream(s.getOutputStream());
+            
+            dout.writeUTF("Hello Server");
+            dout.flush();
+            dout.close();
+            s.close();
+        } catch(Exception e) {
+            System.out.println(e);
+        }
+    }
+}`
+            },
+            {
+                id: 2,
+                title: "UDP Client-Server Communication",
+                code: `// UDPServer.java
+import java.net.*;
+
+public class UDPServer {
+    public static void main(String[] args) throws Exception {
+        DatagramSocket ds = new DatagramSocket(9876);
+        byte[] buffer = new byte[1024];
+        
+        while(true) {
+            DatagramPacket dp = new DatagramPacket(buffer, buffer.length);
+            ds.receive(dp);
+            String msg = new String(dp.getData(), 0, dp.getLength());
+            System.out.println("Client: " + msg);
+        }
+    }
+}
+
+// UDPClient.java
+import java.net.*;
+import java.util.Scanner;
+
+public class UDPClient {
+    public static void main(String[] args) throws Exception {
+        DatagramSocket ds = new DatagramSocket();
+        InetAddress ip = InetAddress.getLocalHost();
+        byte[] buffer = new byte[1024];
+        
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter message: ");
+        String msg = sc.nextLine();
+        
+        buffer = msg.getBytes();
+        DatagramPacket dp = new DatagramPacket(buffer, buffer.length, ip, 9876);
+        ds.send(dp);
+        ds.close();
+    }
+}`
+            }
+            // Add more NE programs here
+        ];
+
+        // Same JavaScript functions as OS Lab
+        // ... (copy all the JavaScript functions from OS Lab)
+    </script>
+</body>
+</html> 

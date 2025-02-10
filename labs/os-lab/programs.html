@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OS Lab Programs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Add Prism.js for code highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-bash.min.js"></script>
+    <style>
+        .program-card {
+            transition: transform 0.2s;
+        }
+        .program-card:hover {
+            transform: scale(1.02);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            position: relative;
+            background-color: #1e1e1e;
+            margin: 2% auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 8px;
+        }
+
+        /* Updated Notification Styles */
+        .notification {
+            position: fixed;
+            bottom: -100px; /* Start below the viewport */
+            right: 20px;
+            padding: 16px 24px;
+            background-color: #059669;
+            color: white;
+            border-radius: 8px;
+            transition: bottom 0.3s ease-in-out;
+            z-index: 2000; /* Ensure it's above other elements */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .notification.show {
+            bottom: 20px; /* Slide up to this position */
+        }
+
+        /* Code Editor Style */
+        .code-editor {
+            background-color: #2d2d2d;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body class="bg-[#121212] text-white min-h-screen p-4">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header with back button -->
+        <div class="flex items-center mb-8">
+            <a href="../../index.html" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg mr-4">
+                ← Back
+            </a>
+            <h1 class="text-2xl font-bold">Operating Systems Lab Programs</h1>
+        </div>
+
+        <!-- Programs Grid -->
+        <div class="grid gap-4">
+            <!-- Program cards will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Modal for Code Viewer -->
+    <div id="codeModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded" onclick="closeModal()">×</button>
+            <h2 id="modalTitle" class="text-xl font-bold mb-4"></h2>
+            <div class="code-editor">
+                <pre><code class="language-bash" id="codeDisplay"></code></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Updated Notification Element -->
+    <div id="notification" class="notification">
+        <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Code copied successfully!
+        </div>
+    </div>
+
+    <script>
+        // Program data
+        const programs = [
+            {
+                id: 1,
+                title: "IMPLEMENTATION OF FILE MANAGEMENT SYSTEM - OPEN, READ, WRITE ON A FILE",
+                code: `#include <unistd.h>
+#include <fcntl.h>
+#include <string.h>
+#include <stdio.h>
+
+int main() {
+    int fd[2];
+    char buf1[23] = "JUST A TEXT";
+    char buf2[100];
+
+    // Open file "SAMPLE" with read/write mode
+    fd[0] = open("SAMPLE", O_RDWR);
+    fd[1] = open("SAMPLE", O_RDWR);
+
+    // Error checking for file open
+    if (fd[0] == -1 || fd[1] == -1) {
+        perror("Error opening file");
+        return 1;
+    }
+
+    // Write buf1 content to the file
+    write(fd[0], buf1, strlen(buf1));
+
+    // Take user input
+    printf("\nENTER YOUR TEXT NOW: ");
+    scanf("%s", buf1);
+
+    // Write user input to the file
+    write(fd[0], buf1, strlen(buf1));
+
+    // Read content from file and write to standard output
+    ssize_t bytesRead = read(fd[1], buf2, sizeof(buf2));
+    if (bytesRead > 0) {
+        write(1, buf2, bytesRead);
+    }
+
+    // Close file descriptors
+    close(fd[0]);
+    close(fd[1]);
+
+    printf("\n");
+    return 0;
+}
+`
+            },
+            {
+                id: 2,
+                title: "IMPLEMENTATION OF FILE MANAGEMENT IN UNIX OPERATING SYSTEM USING OPEN(),CLOSE(),READ(),WRITE() SYSTEM CALLS.",
+                code: `#include <fcntl.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+int main() {
+    int fp, exitstatus;
+    char chr = 'A';
+    int pid;
+
+    pid = fork();
+
+    if (pid == 0) {  // Child process
+        fp = open("3.c", O_WRONLY | O_CREAT, 0644);
+        if (fp == -1) {
+            perror("Error opening file in child");
+            return 1;
+        }
+
+        printf("\nIN CHILD, CHR IS: %c\n", chr);
+        chr = 'B';
+        write(fp, &chr, sizeof(chr));  // Writing 1 byte
+        printf("\nCHILD PROCESSOR ID: %d", getpid());
+        printf("\nCHILD CHR AFTER CHANGE IS: %c", chr);
+        printf("\nCHILD TERMINATED\n");
+
+        close(fp);
+    } else {  // Parent process
+        wait(&exitstatus);  // Waiting for child process to complete
+
+        fp = open("3.c", O_RDONLY);
+        if (fp == -1) {
+            perror("Error opening file in parent");
+            return 1;
+        }
+
+        printf("\nPARENT PROCESSOR ID: %d", getpid());
+        read(fp, &chr, sizeof(chr));  // Reading 1 byte
+        printf("\nCHR AFTER PARENT READ IS: %c\n", chr);
+
+        close(fp);
+    }
+
+    return 0;
+}
+`
+            },
+            {
+                id: 3,
+                title: "IMPLEMENTATION OF FILE MANAGEMENT IN UNIX OPERATING SYSTEM TO READ A FILE IN REVERSE USING LSEEK() SYSTEM CALL",
+                code: `#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+
+int main(int argc, char **argv) {
+    char buf;
+    int size, fd;
+
+    // Check for correct usage
+    if (argc < 2) {
+        printf("Usage: %s <filename>\n", argv[0]);
+        return 1;
+    }
+
+    // Open file
+    fd = open(argv[1], O_RDONLY);
+    if (fd == -1) {
+        perror("Error opening file");
+        return 1;
+    }
+
+    // Get file size
+    size = lseek(fd, -1, SEEK_END);
+    if (size == -1) {
+        perror("Error seeking in file");
+        close(fd);
+        return 1;
+    }
+
+    // Read file in reverse
+    while (size-- >= 0) {
+        read(fd, &buf, 1);
+        write(STDOUT_FILENO, &buf, 1);
+        if (size > 0) {
+            lseek(fd, -2, SEEK_CUR);
+        }
+    }
+
+    close(fd);
+    return 0;
+}
+`
+            },
+            {
+                id: 4,
+                title: "IMPLEMENTATION OF DIRECTORY MANAGEMENT SYSTEM CALLS.",
+                code: `#include <stdio.h>
+#include <dirent.h>
+
+int main(int argc, char *argv[]) {
+    DIR *dir;
+    struct dirent *directory;
+
+    // Check if directory name is provided
+    if (argc < 2) {
+        printf("Usage: %s <directory_path>\n", argv[0]);
+        return 1;
+    }
+
+    // Open directory
+    dir = opendir(argv[1]);
+    if (dir == NULL) {
+        perror("Error opening directory");
+        return 1;
+    }
+
+    // Read and print directory entries
+    while ((directory = readdir(dir)) != NULL) {
+        printf("%lu %s\n", directory->d_ino, directory->d_name);
+    }
+
+    // Close directory
+    closedir(dir);
+    return 0;
+}
+`
+            },
+            {
+                id: 5,
+                title: "IMPLEMENTATION OF PROCESS MANAGEMENT CALLS - FORK(),WAIT(),EXECLP()",
+                code: `#include<stdio.h>
+#include<unistd.h>
+#include<sys/wait.h>
+#include<sys/types.h>
+#include<stdlib.h>
+int main()
+{
+int pid;
+pid=fork();
+if(pid<0)
+{
+printf("\nFORK FAILED\n");
+exit(-1);
+}
+else if(pid==0)
+{
+execlp("/bin/ls","is","-1",NULL);
+}
+else
+{
+wait(NULL);
+printf("\nCHILD COMPLETE\n");
+exit(0);
+}
+}`
+            },
+            {
+                id: 6,
+                title: "IMPLEMENTATION OF PROCESS MANAGEMENT SYSTEM CALLS - FORK() , EXIT()",
+                code: `#include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/wait.h>
+
+int main(void) {
+    pid_t pid;
+    printf("BEFORE FORK\n");
+
+    pid = fork();
+
+    if (pid > 0) {  // Parent process
+        sleep(1);
+        printf("PARENT PID: %d, PPID: %d, CHILD PID: %d\n", getpid(), getppid(), pid);
+        wait(NULL); // Wait for the child to prevent zombie process
+    } 
+    else if (pid == 0) {  // Child process
+        printf("CHILD PID: %d, PPID: %d\n", getpid(), getppid());
+        exit(0);  // Exit the child process properly
+    } 
+    else {  // Fork failed
+        printf("FORK ERROR\n");
+        exit(1);
+    }
+
+    printf("BOTH PROCESSES CONTINUE FROM HERE\n");
+    return 0;
+}
+`
+            },
+            {
+                id: 7,
+                title: "IMPLEMENTATION OF PROCESS MANAGEMENT CALLS KILL(),SIGNAL()",
+                code: `#include <stdio.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <signal.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+pid_t pid;
+
+void death_handler(int signo) {
+    int status;
+    
+    switch (signo) {
+        case SIGCHLD:
+            waitpid(-1, &status, 0);
+            printf("CHILD DIES: exit status %d\n", WEXITSTATUS(status));
+            exit(0);
+            break;
+        case SIGALRM:
+            if (kill(pid, SIGTERM) == 0) {
+                fprintf(stderr, "5 SECONDS OVER, CHILD KILLED\n");
+            }
+            exit(1);
+            break;
+    }
+}
+
+int main(int argc, char **argv) {
+    if (argc < 2) {
+        printf("Usage: %s <command> [args...]\n", argv[0]);
+        return 1;
+    }
+
+    struct sigaction sa;
+    sa.sa_handler = death_handler;
+    sa.sa_flags = 0;
+    sigemptyset(&sa.sa_mask);
+    sigaction(SIGCHLD, &sa, NULL);
+    sigaction(SIGALRM, &sa, NULL);
+
+    switch (pid = fork()) {
+        case -1:
+            perror("FORK ERROR");
+            return 1;
+        case 0:
+            execvp(argv[1], &argv[1]);
+            perror("exec");
+            exit(1);
+        default:
+            alarm(5);
+            pause();
+            printf("PARENT DIES\n");
+            exit(1);
+    }
+
+    return 0;
+}
+`
+            },
+            {
+                id: 8,
+                title: "IMPLEMENTATION OF SCHEDULING ALGORITHM N (FCFS ALGORITHM)",
+                code: `#include <stdio.h>
+#include <stdlib.h>
+
+struct fcfs {
+    int pno;
+    int btime;
+};
+
+int main() {
+    int n, i, wait;
+    float avg, avg1, avg2, tc;
+    struct fcfs f[20];
+
+    printf("ENTER THE NUMBER OF PROCESSES: ");
+    scanf("%d", &n);
+
+    for (i = 0; i < n; i++) {
+        printf("\nENTER THE PROCESS NUMBER: ");
+        scanf("%d", &f[i].pno);
+        printf("ENTER THE BURST TIME: ");
+        scanf("%d", &f[i].btime);
+    }
+
+    printf("\nPROCESS DETAILS:\n");
+    printf("PROCESS\t BURST TIME\t WAITING TIME\t TURNAROUND TIME\n");
+
+    avg = 0;
+    avg1 = 0;
+    avg2 = 0;
+    wait = 0;
+    tc = 0;
+
+    for (i = 0; i < n; i++) {
+        printf("%d\t\t %d\t\t %d\t\t %d\n", f[i].pno, f[i].btime, wait, wait + f[i].btime);
+        tc += (wait + f[i].btime);
+        avg += wait;
+        wait += f[i].btime;
+    }
+
+    avg1 = avg / n;
+    avg2 = tc / n;
+
+    printf("\nAVERAGE WAITING TIME: %.2f\n", avg1);
+    printf("AVERAGE TURNAROUND TIME: %.2f\n", avg2);
+
+    return 0;
+}
+`
+            },
+            {
+                id: 9,
+                title: "IMPLEMENTATION OF SCHEDULING ALGORITHM ( SHORTEST JOB FIRST)",
+                code: `#include <stdio.h>
+
+struct s {
+    int pno;
+    int btime;
+} s[20];
+
+int main() {
+    int i, j, n, wait, ptemp, ptemp1;
+    float avg, avg1, avg2, tc;
+
+    printf("ENTER THE NUMBER OF PROCESSES: ");
+    scanf("%d", &n);
+
+    wait = 0;
+    avg = 0;
+    avg1 = 0;
+    avg2 = 0;
+    tc = 0;
+
+    for (i = 0; i < n; i++) {
+        printf("\nENTER THE PROCESS NUMBER: ");
+        scanf("%d", &s[i].pno);
+        printf("ENTER THE BURST TIME: ");
+        scanf("%d", &s[i].btime);
+    }
+
+    // Sorting processes by burst time (SJF - Shortest Job First)
+    for (i = 0; i < n - 1; i++) {
+        for (j = i + 1; j < n; j++) {
+            if (s[i].btime > s[j].btime) {  // Sorting in ascending order
+                ptemp1 = s[i].btime;
+                ptemp = s[i].pno;
+
+                s[i].btime = s[j].btime;
+                s[i].pno = s[j].pno;
+
+                s[j].btime = ptemp1;
+                s[j].pno = ptemp;
+            }
+        }
+    }
+
+    printf("\nTHE FOLLOWING ARE THE PROCESS DETAILS:\n");
+    printf("PROCESS NO\tBURST TIME\tWAITING TIME\tTURN AROUND TIME\n");
+
+    for (i = 0; i < n; i++) {
+        printf("%d\t\t%d\t\t%d\t\t%d\n", s[i].pno, s[i].btime, wait, wait + s[i].btime);
+        tc += (wait + s[i].btime);
+        avg += wait;
+        wait += s[i].btime;
+    }
+
+    avg1 = avg / n;
+    avg2 = tc / n;
+
+    printf("\nTHE AVERAGE WAITING TIME OF PROCESSES IS: %.2f", avg1);
+    printf("\nTHE AVERAGE TURNAROUND TIME OF PROCESSES IS: %.2f\n", avg2);
+
+    return 0;
+}
+`
+            },
+            {
+                id: 10,
+                title: "IMPLEMENTATION OF SCHEDULING ALGORITHM (PRIORITY QUEUE SCHEDULING)",
+                code: `#include <stdio.h>
+
+struct pr {
+    int prino, pno;
+    int btime;
+};
+
+int main() {
+    int n, i, j, wait, ptemp, prtemp, btemp;
+    float avg, avg1, avg2, tc;
+    struct pr p[15];
+
+    printf("\nPRIORITY SCHEDULING\n");
+    printf("\nENTER THE NUMBER OF PROCESSES: ");
+    scanf("%d", &n);
+
+    wait = 0;
+    avg = 0;
+    avg1 = 0;
+    avg2 = 0;
+    tc = 0;
+
+    for (i = 0; i < n; i++) {
+        printf("\nENTER THE PROCESS NUMBER: ");
+        scanf("%d", &p[i].pno);
+        printf("ENTER THE PRIORITY NUMBER (Lower value = Higher priority): ");
+        scanf("%d", &p[i].prino);
+        printf("ENTER THE BURST TIME: ");
+        scanf("%d", &p[i].btime);
+    }
+
+    // Sorting processes by priority (Lower priority number = higher priority)
+    for (i = 0; i < n - 1; i++) {
+        for (j = i + 1; j < n; j++) {
+            if (p[i].prino > p[j].prino) {  // Sorting by priority
+                prtemp = p[i].prino;
+                btemp = p[i].btime;
+                ptemp = p[i].pno;
+
+                p[i].prino = p[j].prino;
+                p[i].btime = p[j].btime;
+                p[i].pno = p[j].pno;
+
+                p[j].prino = prtemp;
+                p[j].btime = btemp;
+                p[j].pno = ptemp;
+            }
+        }
+    }
+
+    printf("\nTHE FOLLOWING ARE THE PROCESS DETAILS:\n");
+    printf("PROCESS NO\tPRIORITY\tBURST TIME\tWAITING TIME\tTURNAROUND TIME\n");
+
+    for (i = 0; i < n; i++) {
+        printf("%d\t\t%d\t\t%d\t\t%d\t\t%d\n", 
+               p[i].pno, p[i].prino, p[i].btime, wait, wait + p[i].btime);
+        
+        tc += (wait + p[i].btime);
+        avg += wait;
+        wait += p[i].btime;
+    }
+
+    avg1 = avg / n;
+    avg2 = tc / n;
+
+    printf("\nAVERAGE WAITING TIME FOR THE PROCESSES: %.2f", avg1);
+    printf("\nAVERAGE TURNAROUND TIME FOR THE PROCESSES: %.2f\n", avg2);
+
+    return 0;
+}
+`
+            },
+            {
+                id: 11,
+                title: "IMPLEMENTATION OF SCHEDULING (ROUND ROBIN ALGORITHM)",
+                code: `#include <stdio.h>
+
+struct rr {
+    int pno, btime, com, wt, cal;
+    char st;
+};
+
+int main() {
+    int n, i, j, wait, temp;
+    float avg, avg1;
+    struct rr r[4];
+
+    printf("\n ENTER THE NUMBER OF PROCESSES: ");
+    scanf("%d", &n);
+
+    for (i = 0; i < n; i++) {
+        printf("\n ENTER THE PROCESS NUMBER: ");
+        scanf("%d", &r[i].pno);
+        printf("\n ENTER THE BURST TIME: ");
+        scanf("%d", &r[i].btime);
+        r[i].st = 'a';
+        r[i].wt = 0;
+        r[i].com = 0;
+        r[i].cal = 0;
+    }
+
+    printf("\n THE FOLLOWING ARE THE PROCESS DETAILS");
+    printf("\n TIME QUANTUM = 4");
+    printf("\n PROCESS NO\tBURST TIME\tWAITING TIME\tCOMPLETE TIME");
+
+    avg = 0;
+    avg1 = 0;
+    wait = 0;
+    temp = 4;
+
+    for (j = 0; j < n; j++) {
+        while (r[j].st == 'a') {
+            for (i = 0; i < n; i++) {
+                if (r[i].st == 'a') {
+                    if (r[i].btime > 4) {
+                        r[i].wt = wait;
+                        r[i].cal += (wait - r[i].com);
+                        r[i].com = wait + temp;
+                        printf("\n%d\t\t%d\t\t%d\t\t%d", r[i].pno, temp, wait, wait + temp);
+                        wait += temp;
+                        r[i].btime -= temp;
+                        if (r[i].btime <= 0) {
+                            r[i].st = 'p';
+                        }
+                    } else {
+                        r[i].wt = wait;
+                        r[i].cal += (wait - r[i].com);
+                        r[i].com = wait + r[i].btime;
+                        printf("\n%d\t\t%d\t\t%d\t\t%d", r[i].pno, r[i].btime, wait, wait + r[i].btime);
+                        wait += r[i].btime;
+                        r[i].st = 'p';
+                    }
+                }
+            }
+        }
+    }
+
+    for (i = 0; i < n; i++) {
+        avg += r[i].cal;
+        avg1 += r[i].com;
+    }
+
+    avg /= n;
+    avg1 /= n;
+
+    printf("\n THE AVERAGE WAITING TIME IS %.2f ms", avg);
+    printf("\n THE AVERAGE TURNAROUND TIME IS %.2f ms\n", avg1);
+
+    return 0;
+}
+`
+            },
+            {
+                id: 12,
+                title: "IPC MECHNASIUM-PIPES",
+                code: `#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+
+int main() {
+    int pipefd[2];
+    char buffer[80];
+
+    // Create a pipe
+    if (pipe(pipefd) == -1) {
+        perror("pipe");
+        exit(EXIT_FAILURE);
+    }
+
+    // Create a child process
+    pid_t pid = fork();
+
+    if (pid < 0) {
+        perror("fork");
+        exit(EXIT_FAILURE);
+    }
+
+    // Parent process (writer)
+    if (pid > 0) {
+        close(pipefd[0]); // Close the reading end in the parent
+        const char *message = "Hello from the parent process!\n";
+        ssize_t bytes_written = write(pipefd[1], message, strlen(message) + 1);
+        if (bytes_written == -1) {
+            perror("write");
+            exit(EXIT_FAILURE);
+        }
+        printf("Parent: Sent message - %s", message);
+        close(pipefd[1]); // Close the writing end in the parent
+    } 
+    // Child process (reader)
+    else {
+        close(pipefd[1]); // Close the writing end in the child
+        ssize_t bytes_read = read(pipefd[0], buffer, sizeof(buffer) - 1);
+        if (bytes_read == -1) {
+            perror("read");
+            exit(EXIT_FAILURE);
+        } else if (bytes_read == 0) {
+            printf("Child: End of pipe reached (no data).\n");
+        } else {
+            buffer[bytes_read] = '\0'; // Ensure null termination
+            printf("Child: Received message - %s", buffer);
+        }
+        close(pipefd[0]); // Close the reading end in the child
+    }
+
+    return 0;
+}
+`
+            },
+            {
+                id: 13,
+                title: "IPC -FIFO",
+                code: `#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <string.h>
+
+#define FIFO_NAME "myfifo"
+
+int main(int argc, char *argv[]) {
+    char buffer[80];
+    int fd;
+
+    // Create the FIFO (if it doesn't exist)
+    if (mkfifo(FIFO_NAME, 0666) == -1) {
+        perror("mkfifo");
+    }
+
+    // Decide if the process will be a writer or reader based on command-line args
+    if (argc == 2 && strcmp(argv[1], "writer") == 0) {
+        // Writer process
+        fd = open(FIFO_NAME, O_WRONLY); // Open for writing only
+        if (fd == -1) {
+            perror("open");
+            exit(EXIT_FAILURE);
+        }
+
+        const char *message = "Hello from the writer process!\n";
+        ssize_t bytes_written = write(fd, message, strlen(message) + 1);
+        if (bytes_written == -1) {
+            perror("write");
+            exit(EXIT_FAILURE);
+        }
+
+        printf("Writer: Sent message - %s", message);
+        close(fd);
+    } 
+    else if (argc == 2 && strcmp(argv[1], "reader") == 0) {
+        // Reader process
+        fd = open(FIFO_NAME, O_RDONLY); // Open for reading only
+        if (fd == -1) {
+            perror("open");
+            exit(EXIT_FAILURE);
+        }
+
+        ssize_t bytes_read = read(fd, buffer, sizeof(buffer) - 1);
+        if (bytes_read == -1) {
+            perror("read");
+            exit(EXIT_FAILURE);
+        } 
+        else if (bytes_read == 0) {
+            printf("Reader: End of pipe reached (no data).\n");
+        } 
+        else {
+            buffer[bytes_read] = '\0'; // Ensure null termination
+            printf("Reader: Received message - %s", buffer);
+        }
+
+        close(fd);
+    } 
+    else {
+        fprintf(stderr, "Usage: %s [writer|reader]\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    return 0;
+}
+`
+            },
+            {
+                id: 14,
+                title: "MESSAGE QUEUE IPC",
+                code: `//code for common.h
+                #ifndef COMMON_H
+#define COMMON_H
+
+#define MAX_TEXT 100
+
+struct my_msg {
+    long msg_type;
+    char some_text[MAX_TEXT]; // Adjust size as needed
+};
+
+#endif
+
+//code for sender.c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/ipc.h>
+#include <sys/msg.h>
+#include "common.h" // Include the header file
+
+int main() {
+    int msgid;
+    struct my_msg some_data;
+    int running = 1;
+    
+    key_t key = ftok("/tmp/myqueue", 65); // Generate key
+    
+    // Get message queue ID (create if it doesn't exist)
+    msgid = msgget(key, 0666 | IPC_CREAT);
+    if (msgid == -1) {
+        perror("msgget");
+        exit(1);
+    }
+
+    while (running) {
+        printf("Enter message (or 'end' to quit): ");
+        fgets(some_data.some_text, MAX_TEXT, stdin);
+        some_data.some_text[strcspn(some_data.some_text, "\n")] = '\0'; // Remove trailing newline
+
+        // Check for end message
+        if (strncmp(some_data.some_text, "end", 3) == 0) {
+            running = 0;
+        } else {
+            some_data.msg_type = 1; // Set message type (e.g., 1 for request)
+
+            // Send message to queue
+            if (msgsnd(msgid, &some_data, sizeof(some_data.some_text), 0) == -1) {
+                perror("msgsnd");
+                exit(1);
+            }
+            printf("Message sent!\n");
+        }
+    }
+
+    return 0;
+}
+//code for receiver.c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/ipc.h>
+#include <sys/msg.h>
+#include "common.h" // Include the header file
+
+int main() {
+    int msgid;
+    struct my_msg some_data;
+    long int msg_to_rec = 0; // Any message type
+    
+    key_t key = ftok("/tmp/myqueue", 65); // Generate key
+    
+    // Get message queue ID (create if it doesn't exist)
+    msgid = msgget(key, 0666 | IPC_CREAT);
+    if (msgid == -1) {
+        perror("msgget");
+        exit(1);
+    }
+
+    while (1) {
+        // Receive message from queue
+        if (msgrcv(msgid, &some_data, sizeof(some_data.some_text), msg_to_rec, 0) == -1) {
+            perror("msgrcv");
+            exit(1);
+        }
+
+        printf("Received message: %s\n", some_data.some_text);
+
+        // Check for end message
+        if (strncmp(some_data.some_text, "end", 3) == 0) {
+            break;
+        }
+    }
+
+    // Delete the message queue after receiving "end"
+    msgctl(msgid, IPC_RMID, NULL);
+
+    return 0;
+}
+`
+            },
+            {
+                id: 15,
+                title: "SHARED MEMORY",
+                code: `#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <sys/types.h>
+#include <errno.h>
+#include <fcntl.h> // For O_CREAT and O_RDWR flags
+
+#define SHM_SIZE 1024
+#define SHM_KEY_FILE "shared_memory.txt" // File for generating key
+
+int create_shared_memory(key_t key, size_t size) {
+    int shmid;
+
+    // Create the shared memory segment (if it doesn't exist)
+    if ((shmid = shmget(key, size, IPC_CREAT | IPC_EXCL | 0666)) < 0) {
+        if (errno == EEXIST) {
+            // Segment already exists, attach to it
+            shmid = shmget(key, size, 0666);
+            if (shmid < 0) {
+                perror("shmget");
+                exit(1);
+            }
+        } else {
+            perror("shmget");
+            exit(1);
+        }
+    }
+    return shmid;
+}
+
+void* attach_shared_memory(int shmid) {
+    void *data;
+
+    // Attach the shared memory segment to the process's address space
+    if ((data = shmat(shmid, NULL, 0)) == (void *)-1) {
+        perror("shmat");
+        exit(1);
+    }
+    return data;
+}
+
+void detach_shared_memory(void *data) {
+    // Detach the shared memory segment from the process's address space
+    if (shmdt(data) < 0) {
+        perror("shmdt");
+        exit(1);
+    }
+}
+
+int main(int argc, char *argv[]) {
+    key_t key = ftok(SHM_KEY_FILE, 'X'); // Generate unique key using filename and char
+    int shmid;
+    char *data;
+    int mode = 0; // 0 for reader, 1 for writer
+
+    if (argc > 1) {
+        mode = (strcmp(argv[1], "-w") == 0) ? 1 : 0;
+    }
+
+    // Create or attach to the shared memory segment
+    shmid = create_shared_memory(key, SHM_SIZE);
+
+    // Attach the shared memory segment
+    data = (char *)attach_shared_memory(shmid);
+
+    if (mode == 1) { // Writer process
+        printf("Writer process attached to shared memory segment.\n");
+        // Write data to the shared memory
+        strcpy(data, "Hello from the writer process!");
+        printf("Writer process wrote data to shared memory: %s\n", data);
+    } else { // Reader process
+        printf("Reader process attached to shared memory segment.\n");
+        // Read data from the shared memory
+        printf("Reader process read data from shared memory: %s\n", data);
+    }
+
+    // Detach from the shared memory segment
+    detach_shared_memory(data);
+
+    return 0;
+}
+`
+            },
+            {
+                id: 16,
+                title: "PAGING MEMORY TECH",
+                code: `#include <stdio.h>
+
+int main() {
+    int ms, ps, nop, np, rempages, i, j, x, y, pa, offset;
+    int s[10], fno[10][20];
+
+    printf("\nEnter the memory size: ");
+    scanf("%d", &ms);
+    
+    printf("\nEnter the page size: ");
+    scanf("%d", &ps);
+
+    nop = ms / ps;
+    printf("\nThe number of pages available in memory: %d", nop);
+
+    printf("\nEnter number of processes: ");
+    scanf("%d", &np);
+
+    rempages = nop;
+
+    for (i = 0; i < np; i++) {
+        printf("\nEnter number of pages required for p[%d]: ", i + 1);
+        scanf("%d", &s[i]);
+
+        if (s[i] > rempages) {
+            printf("\nMemory is Full");
+            break;
+        }
+
+        rempages -= s[i];
+
+        printf("\nEnter pagetable for p[%d]: ", i + 1);
+        for (j = 0; j < s[i]; j++) {
+            scanf("%d", &fno[i][j]);
+        }
+    }
+
+    printf("\nEnter Logical Address to find Physical Address");
+    printf("\nEnter process number, page number, and offset: ");
+    scanf("%d %d %d", &x, &y, &offset);
+
+    if (x > np || y >= s[x - 1] || offset >= ps) {
+        printf("\nInvalid Process, Page Number, or Offset");
+    } else {
+        pa = fno[x - 1][y] * ps + offset;
+        printf("\nThe Physical Address is: %d", pa);
+    }
+
+    return 0;
+}
+`
+            },
+            {
+                id: 17,
+                title: "SEGMENTATION",
+                code: `#include <stdio.h>
+#include <stdlib.h>
+
+struct list {
+    int seg;
+    int base;
+    int limit;
+    struct list *next;
+} *p;
+
+void insert(struct list *q, int base, int limit, int seg) {
+    if (p == NULL) {
+        p = (struct list *)malloc(sizeof(struct list));
+        p->limit = limit;
+        p->base = base;
+        p->seg = seg;
+        p->next = NULL;
+    } else {
+        while (q->next != NULL) {
+            q = q->next;
+        }
+        q->next = (struct list *)malloc(sizeof(struct list));
+        q->next->limit = limit;
+        q->next->base = base;
+        q->next->seg = seg;
+        q->next->next = NULL;
+    }
+}
+
+int find(struct list *q, int seg) {
+    while (q != NULL && q->seg != seg) {
+        q = q->next;
+    }
+    return (q != NULL) ? q->limit : -1;
+}
+
+int search(struct list *q, int seg) {
+    while (q != NULL && q->seg != seg) {
+        q = q->next;
+    }
+    return (q != NULL) ? q->base : -1;
+}
+
+int main() {
+    p = NULL;
+    int seg, offset, limit, base, c, s, physical;
+
+    printf("Enter segment table\n");
+    printf("Enter -1 as segment value for termination\n");
+
+    do {
+        printf("Enter segment number: ");
+        scanf("%d", &seg);
+        if (seg != -1) {
+            printf("Enter base value: ");
+            scanf("%d", &base);
+            printf("Enter value for limit: ");
+            scanf("%d", &limit);
+            insert(p, base, limit, seg);
+        }
+    } while (seg != -1);
+
+    printf("Enter offset: ");
+    scanf("%d", &offset);
+    printf("Enter segmentation number: ");
+    scanf("%d", &seg);
+
+    c = find(p, seg);
+    s = search(p, seg);
+
+    if (c != -1 && s != -1 && offset < c) {
+        physical = s + offset;
+        printf("Address in physical memory: %d\n", physical);
+    } else {
+        printf("Error: Invalid segment or offset out of bounds.\n");
+    }
+
+    return 0;
+}
+`
+            },
+            {
+                id: 18,
+                title: "IMPLEMENTATION OF PAGE REPLACEMENT ALGORITHM",
+                code: `#include <stdio.h>
+
+int n, pg[30], fr[10];
+
+void fifo();
+void optimal();
+void lru();
+
+void main() {
+    int i, ch;
+    
+    printf("\nEnter total number of pages: ");
+    scanf("%d", &n);
+    
+    printf("\nEnter page sequence: ");
+    for (i = 0; i < n; i++)
+        scanf("%d", &pg[i]);
+    
+    do {
+        printf("\nMENU");
+        printf("\n1) FIFO");
+        printf("\n2) OPTIMAL");
+        printf("\n3) LRU");
+        printf("\n4) EXIT");
+        printf("\nEnter your choice: ");
+        scanf("%d", &ch);
+        
+        switch (ch) {
+            case 1: fifo(); break;
+            case 2: optimal(); break;
+            case 3: lru(); break;
+        }
+    } while (ch != 4);
+}
+
+void fifo() {
+    int i, f, r, s, count, flag, num, psize;
+    
+    f = 0; r = 0; s = 0;
+    flag = 0; count = 0;
+    
+    printf("\nEnter size of page frame: ");
+    scanf("%d", &psize);
+    
+    for (i = 0; i < psize; i++)
+        fr[i] = -1;
+    
+    while (s < n) {
+        flag = 0;
+        num = pg[s];
+
+        for (i = 0; i < psize; i++) {
+            if (num == fr[i]) {
+                s++;
+                flag = 1;
+                break;
+            }
+        }
+
+        if (flag == 0) {
+            if (r < psize) {
+                fr[r] = pg[s];
+                r++;
+                s++;
+                count++;
+            } else {
+                if (f < psize) {
+                    fr[f] = pg[s];
+                    s++;
+                    f++;
+                    count++;
+                } else {
+                    f = 0;
+                }
+            }
+        }
+
+        printf("\n");
+        for (i = 0; i < psize; i++) {
+            printf("%d\t", fr[i]);
+        }
+    }
+
+    printf("\nPage faults = %d\n", count);
+}
+
+void optimal() {
+    int count[20], i, j, k, fault, f, flag, temp, current, c, dist, max, m, cnt, p, x;
+    
+    fault = 0;
+    dist = 0;
+    k = 0;
+    
+    printf("\nEnter frame size: ");
+    scanf("%d", &f);
+    
+    for (i = 0; i < f; i++) {
+        count[i] = 0;
+        fr[i] = -1;
+    }
+    
+    for (i = 0; i < n; i++) {
+        flag = 0;
+        temp = pg[i];
+
+        for (j = 0; j < f; j++) {
+            if (temp == fr[j]) {
+                flag = 1;
+                break;
+            }
+        }
+
+        if ((flag == 0) && (k < f)) {
+            fault++;
+            fr[k] = temp;
+            k++;
+        } else if ((flag == 0) && (k == f)) {
+            fault++;
+
+            for (cnt = 0; cnt < f; cnt++) {
+                current = fr[cnt];
+                for (c = i; c < n; c++) {
+                    if (current != pg[c])
+                        count[cnt]++;
+                    else
+                        break;
+                }
+            }
+
+            max = 0;
+            for (m = 0; m < f; m++) {
+                if (count[m] > max) {
+                    max = count[m];
+                    p = m;
+                }
+            }
+
+            fr[p] = temp;
+        }
+
+        printf("\n");
+        for (x = 0; x < f; x++) {
+            printf("%d\t", fr[x]);
+        }
+    }
+
+    printf("\nTotal page faults = %d\n", fault);
+}
+
+void lru() {
+    int count[10], i, j, k, fault, flag, temp, current, c, dist, max, m, cnt, p, x, f;
+
+    fault = 0;
+    dist = 0;
+    k = 0;
+
+    printf("\nEnter frame size: ");
+    scanf("%d", &f);
+
+    for (i = 0; i < f; i++) {
+        count[i] = 0;
+        fr[i] = -1;
+    }
+
+    for (i = 0; i < n; i++) {
+        flag = 0;
+        temp = pg[i];
+
+        for (j = 0; j < f; j++) {
+            if (temp == fr[j]) {
+                flag = 1;
+                break;
+            }
+        }
+
+        if ((flag == 0) && (k < f)) {
+            fault++;
+            fr[k] = temp;
+            k++;
+        } else if ((flag == 0) && (k == f)) {
+            fault++;
+
+            for (cnt = 0; cnt < f; cnt++) {
+                current = fr[cnt];
+                for (c = i; c > 0; c--) {
+                    if (current != pg[c])
+                        count[cnt]++;
+                    else
+                        break;
+                }
+            }
+
+            max = 0;
+            for (m = 0; m < f; m++) {
+                if (count[m] > max) {
+                    max = count[m];
+                    p = m;
+                }
+            }
+
+            fr[p] = temp;
+        }
+
+        printf("\n");
+        for (x = 0; x < f; x++) {
+            printf("%d\t", fr[x]);
+        }
+    }
+
+    printf("\nTotal page faults = %d\n", fault);
+}
+`
+            },
+            {
+                id: 19,
+                title: "IMPLEMENTATION OF SIMULATION OF DEADLOCK AVOIDANCE AND PREVENTION ALGORITHM",
+                code: `#include <stdio.h>
+
+int main() {
+    int clm[7][5], req[7][5], alloc[7][5], rsrc[5], avail[5], comp[7];
+    int p, r, i, j, prc, count, total;
+
+    count = 0;
+
+    for (i = 0; i < 7; i++)
+        comp[i] = 0;
+
+    printf("Enter the number of processes: ");
+    scanf("%d", &p);
+
+    printf("Enter the number of resources: ");
+    scanf("%d", &r);
+
+    printf("Enter the claim matrix for each process:\n");
+    for (i = 0; i < p; i++) {
+        printf("\nFor process %d:\n", i + 1);
+        for (j = 0; j < r; j++) {
+            scanf("%d", &clm[i][j]);
+        }
+    }
+
+    printf("Enter the allocation matrix for each process:\n");
+    for (i = 0; i < p; i++) {
+        printf("\nFor process %d:\n", i + 1);
+        for (j = 0; j < r; j++) {
+            scanf("%d", &alloc[i][j]);
+        }
+    }
+
+    printf("Enter the total number of each resource: ");
+    for (j = 0; j < r; j++) {
+        scanf("%d", &rsrc[j]);
+    }
+
+    for (j = 0; j < r; j++) {
+        total = 0;
+        avail[j] = 0;
+        for (i = 0; i < p; i++) {
+            total += alloc[i][j];
+        }
+        avail[j] = rsrc[j] - total;
+    }
+
+    do {
+        for (i = 0; i < p; i++) {
+            for (j = 0; j < r; j++) {
+                req[i][j] = clm[i][j] - alloc[i][j];
+            }
+        }
+
+        printf("\nAvailable resources: ");
+        for (j = 0; j < r; j++) {
+            printf("%d ", avail[j]);
+        }
+
+        printf("\nClaim Matrix\t\tAllocation Matrix\n");
+        for (i = 0; i < p; i++) {
+            for (j = 0; j < r; j++) {
+                printf("%d ", clm[i][j]);
+            }
+            printf("\t\t");
+            for (j = 0; j < r; j++) {
+                printf("%d ", alloc[i][j]);
+            }
+            printf("\n");
+        }
+
+        prc = -1;
+        for (i = 0; i < p; i++) {
+            if (comp[i] == 0) {
+                int safe = 1;
+                for (j = 0; j < r; j++) {
+                    if (req[i][j] > avail[j]) {
+                        safe = 0;
+                        break;
+                    }
+                }
+                if (safe) {
+                    prc = i;
+                    break;
+                }
+            }
+        }
+
+        if (prc != -1) {
+            printf("\nProcess %d runs to completion\n", prc + 1);
+            count++;
+            for (j = 0; j < r; j++) {
+                avail[j] += alloc[prc][j];
+                alloc[prc][j] = 0;
+                clm[prc][j] = 0;
+            }
+            comp[prc] = 1;
+        }
+    } while (count != p && prc != -1);
+
+    if (count == p)
+        printf("\nThe system is in a safe state!\n");
+    else
+        printf("\nThe system is in an unsafe state!\n");
+
+    return 0;
+}
+`
+            },
+            {
+                id: 20,
+                title: "IMPLEMENTATION OF THE CONSUMER PROBLEM USING SEMAPHORE",
+                code: `#include <stdio.h>
+#include <stdlib.h>
+
+typedef int semaphore;
+
+semaphore mutex = 1;
+semaphore full = 0;
+semaphore empty = 0;
+
+int main() {
+    int i, opt, size;
+    int buffer[20] = {0};
+
+    printf("\nEnter buffer capacity: ");
+    scanf("%d", &size);
+    
+    empty = size;
+
+    do {
+        printf("\nMenu: \n1. Producer \n2. Consumer \n3. Quit");
+        printf("\nEnter the option: ");
+        scanf("%d", &opt);
+
+        switch (opt) {
+            case 1: // Producer
+                if (empty != 0) {
+                    empty--;
+                    mutex--;
+                    printf("\nEnter the item: ");
+                    scanf("%d", &buffer[mutex]);
+                    mutex++;
+                    full++;
+
+                    printf("\nThe items in the buffer are: ");
+                    for (i = 0; i < mutex; i++) 
+                        printf("%d ", buffer[i]);
+                    
+                    printf("\nThe buffer size is %d\n", mutex);
+                } else {
+                    printf("\nBuffer Overflow!\n");
+                }
+                break;
+
+            case 2: // Consumer
+                if (empty != size) {
+                    full--;
+                    mutex -= 2;
+
+                    printf("\nThe consumer took item: %d\n", buffer[mutex - full]);
+                    mutex++;
+                    empty++;
+
+                    for (i = 0; i < mutex; i++) 
+                        buffer[i] = buffer[i + 1];
+
+                    printf("\nNew items in buffer: ");
+                    for (i = 0; i < mutex - 1; i++) 
+                        printf("%d ", buffer[i]);
+
+                    printf("\nThe buffer size is %d\n", mutex - 1);
+                } else {
+                    printf("\nBuffer Empty!\n");
+                }
+                break;
+
+            case 3: // Exit
+                exit(0);
+                break;
+
+            default:
+                printf("\nEnter a valid option\n");
+                break;
+        }
+    } while (opt != 3);
+
+    return 0;
+}
+`
+}
+
+            // Add more programs here with the same structure
+            
+        ];
+
+        // Generate program cards
+        const programsGrid = document.querySelector('.grid');
+        programs.forEach(program => {
+            const card = `
+                <div class="program-card bg-orange-900 rounded-lg p-4">
+                    <h2 class="text-xl font-semibold mb-2">Program ${program.id}: ${program.title}</h2>
+                    <div class="flex space-x-4">
+                        <button onclick="showCode(${program.id})" class="bg-orange-700 hover:bg-orange-600 px-4 py-2 rounded">View Code</button>
+                        <button onclick="copyCode(${program.id})" class="bg-orange-700 hover:bg-orange-600 px-4 py-2 rounded">Copy</button>
+                    </div>
+                </div>
+            `;
+            programsGrid.innerHTML += card;
+        });
+
+        // Modal functions
+        function showCode(programId) {
+            const program = programs.find(p => p.id === programId);
+            document.getElementById('modalTitle').textContent = `Program ${program.id}: ${program.title}`;
+            document.getElementById('codeDisplay').textContent = program.code;
+            document.getElementById('codeModal').style.display = 'block';
+            Prism.highlightAll();
+        }
+
+        function closeModal() {
+            document.getElementById('codeModal').style.display = 'none';
+        }
+
+        // Updated Notification function
+        function showNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.add('show');
+            
+            // Remove the notification after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Updated Copy function with error handling
+        function copyCode(programId) {
+            const program = programs.find(p => p.id === programId);
+            navigator.clipboard.writeText(program.code)
+                .then(() => {
+                    showNotification();
+                })
+                .catch(err => {
+                    console.error('Failed to copy text: ', err);
+                    // Show error notification if copy fails
+                    const notification = document.getElementById('notification');
+                    notification.style.backgroundColor = '#dc2626';
+                    notification.innerHTML = '<div class="flex items-center"><svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>Failed to copy code!</div>';
+                    showNotification();
+                });
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('codeModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html> 

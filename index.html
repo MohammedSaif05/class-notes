@@ -70,6 +70,21 @@
         .watermark a:hover {
             color: #fff;
         }
+
+        /* Add new styles for sections */
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 2rem 0 1rem;
+            color: #fff;
+        }
+
+        .section-divider {
+            border-top: 2px solid #333;
+            margin: 2rem auto;
+            width: 80%;
+        }
     </style>
 </head>
 <body class="bg-[#121212] text-white min-h-screen">
@@ -83,8 +98,8 @@
 
     <!-- Main Content -->
     <div class="main-content p-4">
-        <h1 class="text-2xl font-bold text-center mb-8">Select Subject</h1>
-        
+        <!-- Theory Section -->
+        <h2 class="section-title">Theory Subjects</h2>
         <div class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
             <!-- Subject Buttons -->
             <a href="subjects/oose.html" class="subject-btn bg-purple-600 p-4 rounded-lg text-center hover:bg-purple-700">
@@ -105,6 +120,38 @@
             <a href="subjects/toc.html" class="subject-btn bg-pink-600 p-4 rounded-lg text-center hover:bg-pink-700">
                 TOC
             </a>
+        </div>
+
+        <!-- Section Divider -->
+        <div class="section-divider"></div>
+
+        <!-- Lab Section -->
+        <h2 class="section-title">Laboratory Subjects</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+            <!-- Lab Subject Buttons -->
+            <div class="subject-btn bg-indigo-600 p-4 rounded-lg text-center hover:bg-indigo-700">
+                <div class="block mb-2">NE LAB</div>
+                <div class="flex justify-center space-x-2 text-sm">
+                    <a href="labs/ne-lab/NE_LAB_MANUAL.pdf" download class="bg-indigo-700 px-3 py-1 rounded hover:bg-indigo-800">Manual</a>
+                    <a href="labs/ne-lab/programs.html" class="bg-indigo-700 px-3 py-1 rounded hover:bg-indigo-800">Programs</a>
+                </div>
+            </div>
+            
+            <div class="subject-btn bg-orange-600 p-4 rounded-lg text-center hover:bg-orange-700">
+                <div class="block mb-2">OS LAB</div>
+                <div class="flex justify-center space-x-2 text-sm">
+                    <a href="labs/os-lab/OS RECORD.pdf" download class="bg-orange-700 px-3 py-1 rounded hover:bg-orange-800">Manual</a>
+                    <a href="labs/os-lab/programs.html" class="bg-orange-700 px-3 py-1 rounded hover:bg-orange-800">Programs</a>
+                </div>
+            </div>
+            
+            <div class="subject-btn bg-teal-600 p-4 rounded-lg text-center hover:bg-teal-700">
+                <div class="block mb-2">DBMS LAB</div>
+                <div class="flex justify-center space-x-2 text-sm">
+                    <a href="labs/dbms-lab/DBMS-lab.pdf" download class="bg-teal-700 px-3 py-1 rounded hover:bg-teal-800">Manual</a>
+                    <a href="labs/dbms-lab/programs.html" class="bg-teal-700 px-3 py-1 rounded hover:bg-teal-800">Programs</a>
+                </div>
+            </div>
         </div>
     </div>
 

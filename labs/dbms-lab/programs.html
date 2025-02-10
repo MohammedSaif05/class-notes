@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBMS Lab Programs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Add Prism.js for SQL highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-sql.min.js"></script>
+    <style>
+        .program-card {
+            transition: transform 0.2s;
+        }
+        .program-card:hover {
+            transform: scale(1.02);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            position: relative;
+            background-color: #1e1e1e;
+            margin: 2% auto;
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: 8px;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: -100px;
+            right: 20px;
+            padding: 16px 24px;
+            background-color: #059669;
+            color: white;
+            border-radius: 8px;
+            transition: bottom 0.3s ease-in-out;
+            z-index: 2000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .notification.show {
+            bottom: 20px;
+        }
+
+        .code-editor {
+            background-color: #2d2d2d;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body class="bg-[#121212] text-white min-h-screen p-4">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header with back button -->
+        <div class="flex items-center mb-8">
+            <a href="../../index.html" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg mr-4">
+                ← Back
+            </a>
+            <h1 class="text-2xl font-bold">Database Management Systems Lab Programs</h1>
+        </div>
+
+        <!-- Programs Grid -->
+        <div class="grid gap-4">
+            <!-- Program Card Template -->
+            <div class="program-card bg-teal-900 rounded-lg p-4">
+                <h2 class="text-xl font-semibold mb-2">Program 1: Basic SQL Queries</h2>
+                <p class="text-gray-300 mb-4">Implementation of basic SQL queries (SELECT, INSERT, UPDATE, DELETE)</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="bg-teal-700 hover:bg-teal-600 px-4 py-2 rounded">View Code</a>
+                    <a href="#" class="bg-teal-700 hover:bg-teal-600 px-4 py-2 rounded">Download</a>
+                </div>
+            </div>
+
+            <!-- Add more program cards as needed -->
+        </div>
+    </div>
+
+    <!-- Modal and Notification same as OS Lab -->
+    <div id="codeModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded" onclick="closeModal()">×</button>
+            <h2 id="modalTitle" class="text-xl font-bold mb-4"></h2>
+            <div class="code-editor">
+                <pre><code class="language-sql" id="codeDisplay"></code></pre>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification">
+        <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            Code copied successfully!
+        </div>
+    </div>
+
+    <script>
+        // DBMS Lab Programs
+        const programs = [
+            {
+                id: 1,
+                title: "Create and Insert Operations",
+                code: `-- Create Table
+CREATE TABLE Employee (
+    EmpID INT PRIMARY KEY,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Department VARCHAR(50),
+    Salary DECIMAL(10,2)
+);
+
+-- Insert Data
+INSERT INTO Employee VALUES
+(1, 'John', 'Doe', 'IT', 75000.00),
+(2, 'Jane', 'Smith', 'HR', 65000.00),
+(3, 'Mike', 'Johnson', 'Finance', 80000.00);`
+            },
+            {
+                id: 2,
+                title: "Select and Where Clause",
+                code: `-- Basic Select
+SELECT * FROM Employee;
+
+-- Where Clause
+SELECT FirstName, LastName, Salary
+FROM Employee
+WHERE Salary > 70000;
+
+-- Multiple Conditions
+SELECT *
+FROM Employee
+WHERE Department = 'IT'
+AND Salary >= 60000;`
+            }
+            // Add more DBMS programs here
+        ];
+
+        // Same JavaScript functions as OS Lab
+        // ... (copy all the JavaScript functions from OS Lab)
+    </script>
+</body>
+</html> 
