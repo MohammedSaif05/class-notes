@@ -24,6 +24,7 @@
         .main-content {
             display: none;
             animation: fadeIn 0.5s ease 3.5s forwards;
+            flex: 1;
         }
 
         @keyframes fadeOut {
@@ -52,13 +53,13 @@
         }
         
         .watermark {
-            position: fixed;
-            bottom: 1rem;
-            left: 0;
-            right: 0;
+            position: relative;
+            margin-top: 3rem;
+            padding: 1rem 0;
             text-align: center;
             color: #666;
             font-size: 0.9rem;
+            background-color: #1a1a1a;
         }
         
         .watermark a {
@@ -94,6 +95,12 @@
             border-top: 2px solid #333;
             margin: 2rem auto;
             width: 80%;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
     </style>
 </head>
@@ -137,7 +144,7 @@
 
         <!-- Lab Section -->
         <h2 class="section-title">Laboratory Subjects</h2>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto mb-8">
             <!-- Lab Subject Buttons -->
             <div class="subject-btn bg-indigo-600 p-6 sm:p-8 rounded-lg text-center hover:bg-indigo-700">
                 <div class="block mb-3 text-lg sm:text-xl font-medium">NE LAB</div>
@@ -165,10 +172,10 @@
         </div>
     </div>
 
-    <!-- Add watermark at the bottom -->
-    <div class="watermark">
-        Designed and developed by <a href="https://mohammedsaif.netlify.app/" >Mohammed Saif</a>
-    </div>
+    <!-- Change div to footer element -->
+    <footer class="watermark">
+        Designed and developed by <a href="https://mohammedsaif.netlify.app/" target="_blank" rel="noopener noreferrer">Mohammed Saif</a>
+    </footer>
 
     <script>
         // Show main content after splash screen
